@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 
-const LoginScreen = () => {
+const RegistrerScreen = () => {
   // logica
 
   // tamaño del height
@@ -88,4 +88,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default RegistrerScreen;

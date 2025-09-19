@@ -117,3 +117,8 @@ peticiones
 
 7.
   recordar cualquier configuracion ponerlo en el > README.md   
+
+
+8.
+ iconos > presentation\theme\components\ThemedTextInput.tsx
+ iconos  
