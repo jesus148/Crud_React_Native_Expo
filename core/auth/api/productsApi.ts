@@ -6,6 +6,7 @@ import { Platform } from "react-native";
 // Esto sirve para saber en qué entorno está corriendo la app.
 const STAGE = process.env.EXPO_PUBLIC_STAGE || "dev";
 
+// puerto del pc donde esta el back externo corriendo con docker 
 export const API_URL =
   STAGE === "prod" //si estas producccion
     ? process.env.EXPO_PUBLIC_API_URL

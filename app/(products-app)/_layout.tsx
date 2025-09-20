@@ -1,4 +1,5 @@
 import { useAuthStore } from '@/presentation/auth/store/useAuthStore';
+import { useThemeColor } from '@/presentation/theme/hooks/useThemeColor';
 import { Redirect, Stack } from 'expo-router';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
@@ -8,6 +9,9 @@ const CheckAutenticadLayaout = () => {
 
   // contexto zustand
   const {status , checkStatus} = useAuthStore();
+
+  // hook obtiene color
+  const backgroundColor = useThemeColor({},'background');
 
   // se ejecua al iniciar la app
   useEffect(() => {
@@ -42,7 +46,20 @@ const CheckAutenticadLayaout = () => {
 
   // renderizado solo para users utenticados
   return (
-    <Stack>
+    <Stack 
+    screenOptions={{
+      //Quita la línea/sombra que aparece debajo del header
+      headerShadowVisible:false, 
+      // Cambia el estilo del header
+      headerStyle:{
+        backgroundColor:backgroundColor
+      },
+      // Cambia el estilo del área de contenido
+      contentStyle:{
+        backgroundColor:backgroundColor
+      }
+    }}
+    >
       {/* muestra la vista > app\(products-app)\(home)\index.tsx */}
       <Stack.Screen 
       name="(home)/index"

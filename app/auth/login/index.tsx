@@ -1,22 +1,76 @@
+import { useAuthStore } from "@/presentation/auth/store/useAuthStore";
 import ThemedButton from "@/presentation/theme/components/ThemedButton";
 import ThemedLink from "@/presentation/theme/components/ThemedLink";
 import { ThemedText } from "@/presentation/theme/components/ThemedText";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
-import React from "react";
+import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
+import { router } from "expo-router";
+import React, { useState } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   ScrollView,
   useWindowDimensions,
   View,
 } from "react-native";
 
+// VISTA LOGIN
+
 const LoginScreen = () => {
   // logica
+
+
+  // contexto
+  const {login} = useAuthStore();
 
   // tamaño del height
   // cuando cambia el tamaño se actualiza los demas
   const { height } = useWindowDimensions();
   // console.log(height)
+
+  // define el color
+  const backgroundColor = useThemeColor({}, 'background');
+
+  
+  const [isPosting,setIsPosting ] = useState(false);
+
+
+  // para setear valores inputs
+  const [form, setForm] =  useState({
+    email:'', 
+    password:''
+  });
+
+
+  // metodo logeo
+  const onLogin = async ()=>{
+    // desestructurando
+    const {email, password} = form;
+    console.log({email, password});
+
+    // si estan vacios
+    if(email.length === 0 || password.length === 0){
+      return;
+    }
+
+    setIsPosting(true);
+
+    // metodo rest
+    const wasSuccesFul = await login(email, password);
+    setIsPosting(false);
+
+    // todo correcto
+    if(wasSuccesFul){
+      // replace genera una nueva vista no usa pil
+      // app\_layout.tsx
+      router.replace('/');
+      return;
+    }
+    // printer
+    Alert.alert('Error', 'Usuario o Contraseña no son Correctas');
+  }
+
+
 
   // renderizado
   return (
@@ -24,7 +78,7 @@ const LoginScreen = () => {
     // si sale error poner en el > app\_layout.tsx -- padre envolverlo con GestureHandlerRootView
     <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
       {/* para q haga scrool */}
-      <ScrollView style={{ paddingHorizontal: 40 }}>
+      <ScrollView style={{ paddingHorizontal: 40, backgroundColor:backgroundColor }}>
         {/* vista encabezado */}
         <View
           style={{
@@ -43,12 +97,17 @@ const LoginScreen = () => {
             keyboardType="email-address" //tipo de input
             autoCapitalize="none"
             icon="mail-outline"
+            value={form.email} //value del input
+            // cuando escribe ejecuta esto , solo cambia el email
+            onChangeText={(value)=> setForm({...form, email:value})}
           />
           <ThemedTextInput
             placeholder="Contraseña"
             secureTextEntry //campos ocultos
             autoCapitalize="none"
             icon="lock-closed-outline"
+            value={form.password}
+            onChangeText={(value)=>setForm({...form, password:value})}
           />
         </View>
 
@@ -57,7 +116,11 @@ const LoginScreen = () => {
         <View style={{marginTop:10}} />
 
         {/* boton */}
-        <ThemedButton icon="arrow-forward-circle-outline">
+        <ThemedButton 
+        icon="arrow-forward-circle-outline"
+        onPress={onLogin} //envia
+        disabled={isPosting} //desabilitado , evita el repetido
+        >
           {/* todo dentro de aca es children auto , actua como props */}
           Ingresar
         </ThemedButton>

@@ -16,6 +16,7 @@ interface Props extends PressableProps{
 const ThemedButton = ({children, icon, ...rest}:Props) => {
     // logica
 
+    // determina color
     const primaryColor = useThemeColor({}, 'primary');
 
 
@@ -31,6 +32,8 @@ const ThemedButton = ({children, icon, ...rest}:Props) => {
         }, 
         styles.button
     ]}
+    // resto de funciones del elemento
+    {...rest}
     >
         {/* texto */}
         <Text style={{color:'white'}}>{children}</Text>

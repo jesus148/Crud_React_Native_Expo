@@ -30,7 +30,7 @@ const ThemedLink = ({ style, ...rest }: Props) => {
         // estilos como props
         style,
       ]}
-      // hijo al llamar
+      // resto de props del elemento
       {...rest}
     />
   );

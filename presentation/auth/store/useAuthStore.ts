@@ -33,12 +33,14 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
   //   metodo cambia estado
   changeStatus: (token?: string, user?: User) => {
+    // si esta vacio
     if (!token || !user) {
       set({ status: "unauthenticated", token: undefined, user: undefined });
 
       return false;
     }
 
+    // setea hay valor
     set({
       status: "authenticated",
       token: token,
@@ -79,6 +81,13 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
   // metodo para verificar estado
   checkStatus: async () => {
+
+
+    // cuando se logea deja entrar solo test
+    // if(get().user){
+    //   return;
+    // }
+
     // metodo rest de axios
     const resp = await authCheckStatus(); //metodo rest
 
