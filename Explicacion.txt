@@ -66,7 +66,9 @@ To run your project, navigate to the directory and run one of the following npm 
  folder para regla de negocio y metodos rest
   > core
   > core\auth\interface\user.ts  --- clase modelo de mi user
-
+ 
+ folder para almacenar token.etc 
+ helpers\adapters
 
 
   4. 
@@ -122,3 +124,13 @@ peticiones
 8.
  iconos > presentation\theme\components\ThemedTextInput.tsx
  iconos  
+
+documentacion > https://icons.expo.fyi/Index
+
+
+9.
+ para seguridad del token o almcenar el token> https://docs.expo.dev/versions/latest/sdk/securestore/
+
+  npx expo install expo-secure-store
+
+  > helpers\adapters\secury-storage.adapter.ts
