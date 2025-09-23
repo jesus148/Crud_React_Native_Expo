@@ -1,5 +1,13 @@
 
 
+IMPORTANTE EL BACK ES EXTERNO 
+> LEVANTAR DOCKER 
+> C:\Users\jesus\Desktop\JESUS\REACT NATIVE\FernadoHerreraCurso\productApp\back\tesloshop-backend
+> en postman > react native > crud_proyecto
+> recordar hay metodos rest > como los get de products q llevan >
+     autorization > bearer token > token (poner el token de login)
+
+
 1. 
 
 
@@ -71,6 +79,12 @@ To run your project, navigate to the directory and run one of the following npm 
  helpers\adapters
 
 
+ ojo : folder q inician 
+  > inicia > app\_layout.tsx
+  > luego dirige ahi > app\(products-app)\_layout.tsx
+
+
+
   4. 
    USANDO FUENTES DE GOOGLE FONTS EN TU PROYECTO
   en google fonts 
@@ -112,10 +126,13 @@ peticiones
 
 6. 
   variables de entorno 
-   > .env
+
+
+   > .env > crea y edita ahi adentro
    > has una copia de eso y vuelve a pegarlo
    > y cambia su nombe x > .env.template
 
+  ojo: recordar ahi ponemos las ip de mi pc , en ciertos casos cambia la ip de mi pc donde esta corriendo el back con docker
 
 7.
   recordar cualquier configuracion ponerlo en el > README.md   
@@ -134,3 +151,5 @@ documentacion > https://icons.expo.fyi/Index
   npx expo install expo-secure-store
 
   > helpers\adapters\secury-storage.adapter.ts
+
+

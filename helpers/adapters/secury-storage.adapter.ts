@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 export class SecureStorageAdapter{
 
     // CLASE PARA GUARDAR O ALMACENAR INFORMACION SENSIBLE COMO TOKEN.ETC
+    // recordar una vez logueado se queda almcanado el token u otro valor x eso debes eliminarlo
 
 
 

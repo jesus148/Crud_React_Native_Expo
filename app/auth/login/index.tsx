@@ -32,6 +32,7 @@ const LoginScreen = () => {
   const backgroundColor = useThemeColor({}, 'background');
 
   
+  // para no repetir los envios
   const [isPosting,setIsPosting ] = useState(false);
 
 
@@ -46,22 +47,25 @@ const LoginScreen = () => {
   const onLogin = async ()=>{
     // desestructurando
     const {email, password} = form;
-    console.log({email, password});
+    // console.log({email, password});
 
     // si estan vacios
     if(email.length === 0 || password.length === 0){
       return;
     }
 
+    // para evitar enviar varias veces espera
     setIsPosting(true);
 
     // metodo rest
     const wasSuccesFul = await login(email, password);
+    
+    // para evitar enviar varias veces espera
     setIsPosting(false);
 
     // todo correcto
     if(wasSuccesFul){
-      // replace genera una nueva vista no usa pil
+      // replace genera una nueva vista no usa pilas como stack(uno detras de otra vista)
       // app\_layout.tsx
       router.replace('/');
       return;

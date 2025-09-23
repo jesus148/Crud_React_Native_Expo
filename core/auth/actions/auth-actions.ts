@@ -1,9 +1,7 @@
-
-import { productsApi } from "../api/productsApi";
+import { productsApi } from "../../api/productsApi";
 import { User } from "../interface/user";
 
-
-// METODOS API REST
+// METODOS API REST PARA LOGIN 
 
 // modelo de response del rest loging
 // > en el postaman > http://localhost:3000/api/auth/login
@@ -61,6 +59,31 @@ export const authLogin = async (email: string, password: string) => {
     console.log(error);
     // throw new Error('User and/or password not valid');
     return null;
+  }
+};
+
+
+// metodo registro
+export const registrer = async (
+  email: string,
+  password: string,
+  fullName: string
+) => {
+  // email convierte minuscula
+  email = email.toLowerCase();
+  try {
+    // metodo rest
+    const { data } = await productsApi.post<AuthResponse>("/auth/register", {
+      email,
+      password,
+      fullName,
+    });
+    // console.log(data);
+    // formateo el retorno de mi response
+    return returnUserToken(data);
+  } catch (error) {
+    console.log(error);
+    return null
   }
 };
 

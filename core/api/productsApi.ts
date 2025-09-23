@@ -1,6 +1,8 @@
 import { SecureStorageAdapter } from "@/helpers/adapters/secury-storage.adapter";
 import axios from "axios";
 import { Platform } from "react-native";
+
+// BASE REST API AXIO
 // instancia de axios
 // base url osea la base del api
 
