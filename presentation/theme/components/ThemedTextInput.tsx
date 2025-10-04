@@ -25,12 +25,15 @@ const ThemedTextInput = ({icon,...rest}:Props) => {
     // para el focus inputs
     const [isActive, setIsActive] = useState(false);
 
+    // guarda renderezidos
     const inputRef = useRef<TextInput>(null);
 
     // renderizado
   return (
     <View style={{
+      // estilos  , trae todo esto
       ...styles.border, 
+    // y lo junta con esto
       //si esta activo el focus cambia color y si se desenfoca tambien
       borderColor:isActive ? primaryColor:'#ccc'
     }}
@@ -75,9 +78,10 @@ const styles = StyleSheet.create({
   border:{
     borderWidth:1,
     borderRadius:5, 
-    padding:5, 
+    padding:10, 
     marginBottom:10,
     flexDirection:'row', 
-    alignItems:'center'
+    alignItems:'center',
+    flex:1
   }
 })

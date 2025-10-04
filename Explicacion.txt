@@ -64,6 +64,7 @@ To run your project, navigate to the directory and run one of the following npm 
  creando folders para componentes y hooks
   > presentation\auth
   > presentation\theme
+  >presentation\products\hooks  --- para TanStackquery 
 
  para solo autenticados 
   >app\(products-app)\(home)
@@ -153,3 +154,15 @@ documentacion > https://icons.expo.fyi/Index
   > helpers\adapters\secury-storage.adapter.ts
 
 
+10.
+
+TanStack Query  : (algo asi como zustand)
+ TanStack Query (anteriormente conocida como React Query) a menudo se describe como la biblioteca de obtención de datos que faltaba para las aplicaciones web, pero en términos más técnicos, hace que la obtención, el almacenamiento en caché, la sincronización y la actualización del estado del servidor en sus aplicaciones web sean muy fáciles.    
+
+ documentation : https://tanstack.com/query/latest/docs/framework/react/installation
+
+ PS C:\Users\jesus\Desktop\JESUS\REACT NATIVE\FernadoHerreraCurso\app6\movies> npm i @tanstack/react-query
+
+
+ > configurando el tansquery
+   app\_layout.tsx

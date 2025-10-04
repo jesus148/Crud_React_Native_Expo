@@ -1,8 +1,10 @@
-import { ThemedText } from "@/presentation/theme/components/ThemedText";
+import ProductList from "@/presentation/products/components/ProductList";
+import { useProducts } from "@/presentation/products/hooks/useProduct";
 import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
 import React from "react";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 
+// VISTA PARA RENDERIZAR LISTA PRODUCTOS
 const HomeScreen = () => {
   // logica
 
@@ -10,13 +12,43 @@ const HomeScreen = () => {
   const primary = useThemeColor({}, 'primary');
 
 
+  // usando el tanskeqery para el contexto
+  const {productsQuery, loadNextPage} =useProducts();
+
+
+  // si esta en curso la solicitud
+  if(productsQuery.isLoading){
+    return(
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <ActivityIndicator size={30}/>
+      </View>
+    )
+  }
+
 
   // renderizado
   return (
-    <View style={{paddingTop:100, paddingHorizontal:20}}>
-      <ThemedText style={{fontFamily:'kanitBold', color:primary}}>HomeScreen</ThemedText>
-      <ThemedText style={{fontFamily:'kanitRegular'}}>HomeScreen</ThemedText>
-      <ThemedText style={{fontFamily:'kanitThin'}}>HomeScreen</ThemedText>
+    <View style={{paddingHorizontal:20}}>
+      <ProductList
+      // Cuando usas useInfiniteQuery, los resultados vienen agrupados en páginas.
+      // Entonces, productsQuery.data.pages es un array de arrays (cada elemento es una página).
+      // flatMap sirve para aplanar un array de arrays en un solo array.
+      // En este caso, cada page ya es un array de productos, así que flatMap((page) => page) hace:
+//       [
+//   [ {id:1}, {id:2}, {id:3} ],
+//   [ {id:4}, {id:5}, {id:6} ],
+//   [ {id:7}, {id:8}, {id:9} ],
+// ]
+// queda asi 
+// [
+//   {id:1}, {id:2}, {id:3},
+//   {id:4}, {id:5}, {id:6},
+//   {id:7}, {id:8}, {id:9},
+// ]
+// ??[] si es null devuelve vacio
+       products={productsQuery.data?.pages.flatMap((page)=>page)??[]}
+       loadNextPage={loadNextPage}
+      />
     </View>
   );
 };
