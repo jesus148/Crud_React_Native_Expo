@@ -9,7 +9,7 @@ import { useThemeColor } from '../hooks/useThemeColor'
 // clase modelo
 interface Props extends PressableProps{
     icon?: keyof typeof Ionicons.glyphMap, 
-    children?:string
+    children?:string //recordar es el contenido dentro
 }
 
 

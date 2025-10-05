@@ -1,15 +1,35 @@
+import ProductImage from "@/presentation/products/components/ProductImage";
+import useProduct from "@/presentation/products/hooks/useProduct";
+import ThemedButton from "@/presentation/theme/components/ThemedButton";
+import ThemedButtonGroup from "@/presentation/theme/components/ThemedButtonGroup";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
 import { ThemedView } from "@/presentation/theme/components/ThemedView";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "expo-router";
+import { Redirect, useLocalSearchParams, useNavigation } from "expo-router";
+import { Formik } from "formik";
 import React, { useEffect } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+} from "react-native";
 
 // VISTA DE 1 PRODUCTO
 const ProducScreen = () => {
   // logica
 
-  // para navegar entre stack
+  // obtiene el id del product al entrar a esto
+  const { id } = useLocalSearchParams();
+  // metodo rest para obtener product solo 1
+  // `${id}` : convierte a string
+  const { productQuery } = useProduct(`${id}`);
+  // sacando la data
+  const product = productQuery.data!;
+  // console.log(product)
+
+  // para navegar entre stack , o al objeto o vista donde entras
   // Obtiene el objeto para controlar la navegación.
   const usenavigation = useNavigation();
 
@@ -22,50 +42,134 @@ const ProducScreen = () => {
     });
   }, []);
 
+  // si hay data en el [productQuery.data]
+  useEffect(() => {
+    //  si hay data en el [productQuery.data]
+    if (productQuery.data) {
+      // cambia las opciones de la vista
+      usenavigation.setOptions({
+        // Permite renderizar un componente en el texto derecha del header.
+        title: productQuery.data.title,
+      });
+    }
+  }, [productQuery.data]);
+
+  // si esta en curso la solicitud
+  if (productQuery.isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size={30} />
+      </View>
+    );
+  }
+
+  // si no exista la data
+  if (!productQuery.data) {
+    // redirecciona > app\(products-app)\(home)\index.tsx
+    return <Redirect href="/(products-app)/(home)" />;
+  }
+
   // renderizado
   return (
-    // ajusta la vista cuando aparece el teclado
-    <KeyboardAvoidingView
-      // como se comporta tu vista
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-    >
-      {/* para scrollear */}
-      <ScrollView style={{ marginHorizontal: 10, marginTop: 20 }}>
-        {/* componente vista */}
-        <ThemedView>
-          {/* componente input */}
-          <ThemedTextInput placeholder="Titulo" style={{ marginVertical: 5 }} />
-
-          <ThemedTextInput placeholder="Slug" style={{ marginVertical: 5 }} />
-
-          <ThemedTextInput
-            placeholder="Descripción"
-            multiline //el texto contiene varias lineas
-            numberOfLines={5} //numero maximo de lineas
-            style={{ marginVertical: 35 }}
-          />
-        </ThemedView>
-        {/* componente vista */}
-        <ThemedView
-          style={{
-            marginHorizontal: 2,
-            marginVertical: 5,
-            flexDirection: "row",
-            gap: 10,
-          }}
+    // usando el formik para manejar el estado de formularios
+    // initialValues : valor inicial
+    // onSubmit : para manejar el formulario
+    <Formik initialValues={product} onSubmit={(first) => console.log(first)}>
+      {({ values, handleSubmit, handleChange, setFieldValue }) => (
+        // ajusta la vista cuando aparece el teclado
+        <KeyboardAvoidingView
+          // como se comporta tu vista
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
-          {/* componente input */}
-          <ThemedTextInput
-            placeholder="Precio"
-            style={{ flex: 1 }}
-          ></ThemedTextInput>
-          <ThemedTextInput
-            placeholder="Precio"
-            style={{ flex: 1 }}
-          ></ThemedTextInput>
-        </ThemedView>
-      </ScrollView>
-    </KeyboardAvoidingView>
+          {/* para scrollear */}
+          <ScrollView>
+            {/* recorrido de un productos solo sus imagenes q es un array */}
+            <ProductImage images={values.images} />
+
+            {/* componente vista */}
+            <ThemedView style={{ marginHorizontal: 10, marginTop: 20 }}>
+              {/* componente input */}
+              <ThemedTextInput
+                placeholder="Titulo"
+                style={{ marginVertical: 5 }}
+                value={values.title}
+                onChangeText={handleChange("title")}
+              />
+
+              <ThemedTextInput
+                placeholder="Slug"
+                style={{ marginVertical: 5 }}
+                value={values.slug}
+                onChangeText={handleChange("slug")}
+              />
+
+              <ThemedTextInput
+                placeholder="Descripción"
+                multiline //el texto contiene varias lineas
+                numberOfLines={5} //numero maximo de lineas
+                style={{ marginVertical: 5 }}
+                value={values.description}
+                onChangeText={handleChange("description")}
+              />
+            </ThemedView>
+            {/* componente vista */}
+            <ThemedView
+              style={{
+                marginHorizontal: 10,
+                marginVertical: 5,
+                flexDirection: "row",
+                gap: 10,
+              }}
+            >
+              {/* componente input */}
+              <ThemedTextInput
+                placeholder="Precio"
+                style={{ flex: 1 }}
+              ></ThemedTextInput>
+              <ThemedTextInput
+                placeholder="Precio"
+                style={{ flex: 1 }}
+              ></ThemedTextInput>
+            </ThemedView>
+            {/* componente vista */}
+            <ThemedView style={{ marginHorizontal: 10 }}>
+              {/* componente boton */}
+              <ThemedButtonGroup
+                // envio array props
+                options={["XS", "S", "M", "L", "XL", "XXL", "XXXL"]}
+                // envio array props , del product su array sizes
+                selectOptions={product.sizes}
+                onSelect={(options) => console.log({ options })}
+              />
+
+              <ThemedButtonGroup
+                // envio array props
+                options={["kid", "men", "women", "unisex"]}
+                // envio array props , del product su array gender
+                selectOptions={[product.gender]}
+                onSelect={(options) => console.log({ options })}
+              />
+            </ThemedView>
+            {/* boton para guardar */}
+            <View
+              style={{
+                marginHorizontal: 10,
+                marginBottom: 50,
+                marginTop: 20,
+              }}
+            >
+              {/* componente boton */}
+              <ThemedButton
+                icon="save-outline"
+                onPress={() => console.log("guardar")}
+              >
+                Guardar
+              </ThemedButton>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      )}
+    </Formik>
   );
 };
 

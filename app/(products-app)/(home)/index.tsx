@@ -1,5 +1,5 @@
 import ProductList from "@/presentation/products/components/ProductList";
-import { useProducts } from "@/presentation/products/hooks/useProduct";
+import { useProducts } from "@/presentation/products/hooks/useProducts";
 import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
 import React from "react";
 import { ActivityIndicator, View } from "react-native";

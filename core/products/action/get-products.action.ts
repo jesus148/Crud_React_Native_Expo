@@ -23,7 +23,7 @@ export const getproducts    = async (limit = 20 , offset = 0)=>{
         });
 
         // printer
-        console.log(data);
+        // console.log(data);
 
         // retornando
         return data.map((product)=>({

@@ -6,7 +6,7 @@ IMPORTANTE EL BACK ES EXTERNO
 > en postman > react native > crud_proyecto
 > recordar hay metodos rest > como los get de products q llevan >
      autorization > bearer token > token (poner el token de login)
-
+> ejecutar este project > npm run start
 
 1. 
 
@@ -117,9 +117,6 @@ To run your project, navigate to the directory and run one of the following npm 
 
 5. dependencias 
 
- para estado
- > npm install zustand
-
 peticiones
  >npm install axios
 
@@ -166,3 +163,20 @@ TanStack Query  : (algo asi como zustand)
 
  > configurando el tansquery
    app\_layout.tsx
+
+
+11.
+  usando manejador de formularios
+  > documentacion > https://formik.org/docs/overview   
+  Formik es una pequeña biblioteca que te ayuda con las tres partes más molestas:
+Formik
+Introducir y extraer valores del estado del formulario
+Validación y mensajes de error
+Gestionar el envío del formulario
+Al reunir todo lo anterior en un solo lugar, Formik mantendrá todo organizado, facilitando las pruebas, la refactorización y el análisis de tus formularios.
+
+> npm install formik --save
+
+> si sale error > para tu ejecucion de expo
+ instalar esto >  npm install lodash
+ > limpia la cache de expo > npx expo start -c
