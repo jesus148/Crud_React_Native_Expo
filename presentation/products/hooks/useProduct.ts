@@ -1,11 +1,13 @@
-import { getproductsById } from "@/core/products/action/get-product-by-id.action"
-import { useQuery } from "@tanstack/react-query"
+import { getproductsById } from "@/core/products/action/get-product-by-id.action";
+import { Product } from "@/core/products/interface/get-product";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Alert } from "react-native";
 
 
 // METODO REST PARA EJECUTAR SOLO 1 PRODUCTO GET
 const useProduct = (productId:string) => {
     
-    // metodo rest ejecuta
+    // metodo rest ejecuta EXTRAE DATA DEL BACKEND
     const productQuery= useQuery({
         // clave key
         queryKey:['products',productId],
@@ -13,11 +15,28 @@ const useProduct = (productId:string) => {
         queryFn:()=> getproductsById(productId),
         //duracion de la data de este rest en cache
         staleTime:1000 * 60 *60
-    })
+    });
+
+
+    // METODO ENVIO DATOS AL BACKEND(como registrar , actualizar .etc)
+    // mutacion
+    const productMutation= useMutation({
+        mutationFn:async(data:Product)=>{
+            console.log({data});
+
+            return data;
+        },
+        onSuccess(data:Product){
+            Alert.alert('Producto guardado',`${data.title} se guardo correctamente`)
+        }
+    });
+
+    // mantener el id del producto en caso de ser uno nuevo
 
     // retorna
     return{
-        productQuery
+        productQuery,
+        productMutation
     }
 }
 

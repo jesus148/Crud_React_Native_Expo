@@ -28,6 +28,8 @@ const ThemedButtonGroup = ({ options, selectOptions, onSelect }: Props) => {
           // boton con opacidad
           <TouchableOpacity
             key={option} //key primaria
+            // llama la funcion prop pa actualizar
+            // y le envia el item
             onPress={()=>onSelect(option)}
             // estilos
             style={[

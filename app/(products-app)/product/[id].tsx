@@ -24,7 +24,7 @@ const ProducScreen = () => {
   const { id } = useLocalSearchParams();
   // metodo rest para obtener product solo 1
   // `${id}` : convierte a string
-  const { productQuery } = useProduct(`${id}`);
+  const { productQuery , productMutation } = useProduct(`${id}`);
   // sacando la data
   const product = productQuery.data!;
   // console.log(product)
@@ -72,9 +72,11 @@ const ProducScreen = () => {
   // renderizado
   return (
     // usando el formik para manejar el estado de formularios
-    // initialValues : valor inicial
-    // onSubmit : para manejar el formulario
-    <Formik initialValues={product} onSubmit={(first) => console.log(first)}>
+    // initialValues : valor inicial, osea la data la data lo pone ahi
+    // onSubmit : para manejar el formulario, es la data q enviaras de los form
+      // se envia como objeto
+    // recordar el Formik guarda la data como en memoria antes de enviar
+    <Formik initialValues={product} onSubmit={productMutation.mutate}>
       {({ values, handleSubmit, handleChange, setFieldValue }) => (
         // ajusta la vista cuando aparece el teclado
         <KeyboardAvoidingView
@@ -84,6 +86,7 @@ const ProducScreen = () => {
           {/* para scrollear */}
           <ScrollView>
             {/* recorrido de un productos solo sus imagenes q es un array */}
+            {/* values.images : envio de data del initialvalues, el array de imagenes */}
             <ProductImage images={values.images} />
 
             {/* componente vista */}
@@ -92,8 +95,8 @@ const ProducScreen = () => {
               <ThemedTextInput
                 placeholder="Titulo"
                 style={{ marginVertical: 5 }}
-                value={values.title}
-                onChangeText={handleChange("title")}
+                value={values.title} //valor del input , values.title es el valor del formik
+                onChangeText={handleChange("title")} // funcion cuando cambia el values.title, recuerda "title" = a tus atributo de rest , recordar q el handleChange es para inpust simples
               />
 
               <ThemedTextInput
@@ -125,10 +128,14 @@ const ProducScreen = () => {
               <ThemedTextInput
                 placeholder="Precio"
                 style={{ flex: 1 }}
+                value={values.price.toString()}
+                onChangeText={handleChange("price")}
               ></ThemedTextInput>
               <ThemedTextInput
                 placeholder="Precio"
                 style={{ flex: 1 }}
+                value={values.stock.toString()}
+                onChangeText={handleChange("stock")}
               ></ThemedTextInput>
             </ThemedView>
             {/* componente vista */}
@@ -138,16 +145,35 @@ const ProducScreen = () => {
                 // envio array props
                 options={["XS", "S", "M", "L", "XL", "XXL", "XXXL"]}
                 // envio array props , del product su array sizes
-                selectOptions={product.sizes}
-                onSelect={(options) => console.log({ options })}
+                selectOptions={values.sizes}
+                // metodo setear
+                onSelect={(array) => {
+                  // verifica si existe el array en el values.sizes
+                  const newarray = values.sizes.includes(array)
+                    ? // si existe lo quita
+                      values.sizes.filter((index) => index !== array)
+                    : // si no esta lo suma al arra ya enviado
+                      [...values.sizes, array];
+
+                  // printer
+                  // console.log(newarray);
+
+                  //seteando los sizes con el nuevo array
+                  setFieldValue("sizes", newarray);
+                }}
               />
 
               <ThemedButtonGroup
                 // envio array props
                 options={["kid", "men", "women", "unisex"]}
                 // envio array props , del product su array gender
-                selectOptions={[product.gender]}
-                onSelect={(options) => console.log({ options })}
+                selectOptions={[values.gender]}
+                // actualizando el valor del values.gender , el setFieldValue es para actualizar inputs mas complejos como varias
+                // opciones
+                // selectedOption : es el item q recibe
+                onSelect={(selectedOption) =>
+                  setFieldValue("gender", selectedOption)
+                }
               />
             </ThemedView>
             {/* boton para guardar */}
@@ -158,11 +184,8 @@ const ProducScreen = () => {
                 marginTop: 20,
               }}
             >
-              {/* componente boton */}
-              <ThemedButton
-                icon="save-outline"
-                onPress={() => console.log("guardar")}
-              >
+              {/* componente boton para registrar o actualizar*/}
+              <ThemedButton icon="save-outline" onPress={() => handleSubmit()}>
                 Guardar
               </ThemedButton>
             </View>
