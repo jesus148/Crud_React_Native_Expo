@@ -3,8 +3,35 @@
 import { API_URL, productsApi } from "@/core/api/productsApi";
 import { type Product } from "../interface/get-product";
 
+
+
+// clase modelo vacio 
+// esto nos ayudara para registrar
+const emptyProduct:Product={
+  id:'', 
+  title:'Nuevo Producto', 
+  description:'', 
+  price:0,
+  images:[],
+  slug:'', 
+  gender:'',
+  sizes:[],
+  stock:0, 
+  tags:[]
+}
+
+
+// METODO OBTIENE UN PRODUCTO AXIOS
+
 // Promise<Product> : como el rest es async debes decir q sera una promesa lo q te devuelve pq tiene q esperar
 export const getproductsById = async (id: string): Promise<Product> => {
+
+  console.log(id);
+
+  // si el id new enviado desde el parametro devuelve un objeto vacio
+  // osea el icono mas de la vista listado envia un new como params 
+  if(id ==='new') return emptyProduct;
+
   try {
     // metodo rest
     const { data } = await productsApi.get<Product>(`/products/${id}`);

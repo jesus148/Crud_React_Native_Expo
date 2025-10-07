@@ -15,9 +15,10 @@ export interface Product {
     gender:      string;
     tags:        string[];
     images:      string[];
-    user:        User;
+    user?:        User; //clase hija
 }
 
+// clase User
 export interface User {
     id:       string;
     email:    string;

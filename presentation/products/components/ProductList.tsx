@@ -51,6 +51,7 @@ const ProductList = ({products, loadNextPage}:Props) => {
     showsVerticalScrollIndicator={false} //Oculta la barrita de scroll vertical.
     refreshControl={
       // metodo actualizar o resetear llama al metodo y el usestate
+      // osea es el boton que aparece arriba cuando quieres actualizar el listado
       <RefreshControl refreshing={isRefreshing} onRefresh={onPullToRefresh} />
     }
     />

@@ -25,6 +25,8 @@ const ProducScreen = () => {
   // metodo rest para obtener product solo 1
   // `${id}` : convierte a string
   const { productQuery , productMutation } = useProduct(`${id}`);
+  console.log(productQuery.data);
+
   // sacando la data
   const product = productQuery.data!;
   // console.log(product)

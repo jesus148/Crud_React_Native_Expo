@@ -1,6 +1,8 @@
 import ProductList from "@/presentation/products/components/ProductList";
 import { useProducts } from "@/presentation/products/hooks/useProducts";
+import { FAB } from "@/presentation/theme/components/FAB";
 import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
+import { router } from "expo-router";
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
 
@@ -29,6 +31,7 @@ const HomeScreen = () => {
   // renderizado
   return (
     <View style={{paddingHorizontal:20}}>
+      {/* componente listar productos */}
       <ProductList
       // Cuando usas useInfiniteQuery, los resultados vienen agrupados en páginas.
       // Entonces, productsQuery.data.pages es un array de arrays (cada elemento es una página).
@@ -48,6 +51,16 @@ const HomeScreen = () => {
 // ??[] si es null devuelve vacio
        products={productsQuery.data?.pages.flatMap((page)=>page)??[]}
        loadNextPage={loadNextPage}
+      />
+
+      {/* COMPONENTE BOTON MAS ABAJO PARA AGREGAR PRODUCTO */}
+      <FAB
+      iconName="add-outline" //icono
+      // metodo para redirecciona con el push del stack
+      // osea agrega pilas 
+      // app\(products-app)\product\[id].tsx
+      // recordar como parametro le envia el new osea remplaza el [id]
+      onPress={()=> router.push(`/(products-app)/product/new`)}
       />
     </View>
   );

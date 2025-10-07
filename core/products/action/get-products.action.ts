@@ -5,7 +5,7 @@
 import { API_URL, productsApi } from "@/core/api/productsApi";
 import { type Product } from "../interface/get-product";
 
-// metodo obtiene productos
+// metodo obtiene productos LISTA PRODUCTOS AXIO
 
 export const getproducts    = async (limit = 20 , offset = 0)=>{
     try {
