@@ -76,6 +76,8 @@ const ProducScreen = () => {
     // onSubmit : para manejar el formulario, es la data q enviaras de los form
       // se envia como objeto
     // recordar el Formik guarda la data como en memoria antes de enviar
+    // onSubmit={productMutation.mutate} : envia el obejto de product de formik ya alterado al productMutation
+    // para su registro o update 
     <Formik initialValues={product} onSubmit={productMutation.mutate}>
       {({ values, handleSubmit, handleChange, setFieldValue }) => (
         // ajusta la vista cuando aparece el teclado
@@ -128,6 +130,7 @@ const ProducScreen = () => {
               <ThemedTextInput
                 placeholder="Precio"
                 style={{ flex: 1 }}
+                // se formatea a string pq el value de input solo muestra texto
                 value={values.price.toString()}
                 onChangeText={handleChange("price")}
               ></ThemedTextInput>
