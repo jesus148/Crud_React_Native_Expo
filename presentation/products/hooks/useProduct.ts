@@ -14,10 +14,13 @@ const useProduct = (productId: string) => {
   // ya no pide al backend
   const queryclient = useQueryClient();
   
+
+  // marca o guarda el id en el useref
+  // osea es inmutable guarda el valor y no se resetea al cambiar el estado, no ejecuta renderizados
   const productidref= useRef(productId);
 
 
-  // metodo rest ejecuta EXTRAE DATA DEL BACKEND
+  // metodo rest ejecuta EXTRAE DATA DEL BACKEND SOLO 1 PRODUCTO
   const productQuery = useQuery({
     // clave key
     queryKey: ["products", productId],
@@ -33,12 +36,18 @@ const useProduct = (productId: string) => {
     // metodo para acutalizar o crear segun sea el caso
     // recibe la data del formulario
     mutationFn: async (data: Product) => updateCreateProduct({
-      ...data,
-      id:productidref.current
+      // desestructura
+      ...data, //envio de data
+      id:productidref.current // envio del id
     }),
     // si lo de arriba es correcto , recibe la data como props
     onSuccess(data: Product) {
 
+      
+
+      // del dato de arriba osea si el update o crear es correcto 
+      // se setea el productidref con el nuevo valor
+      // si ya registraste lo guarda de tal forma que si registras otra vez seria un update pq envia el id
       productidref.current = data.id;
 
 
@@ -65,6 +74,12 @@ const useProduct = (productId: string) => {
         // printer modal alert 
       Alert.alert("Producto guardado", `${data.title} se guardo correctamente`);
     },
+
+    onError:(error, newtodom, context)=>{
+      console.log(error);
+      console.log(error.message);
+    }
+
   });
 
   // mantener el id del producto en caso de ser uno nuevo

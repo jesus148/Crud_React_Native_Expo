@@ -19,6 +19,8 @@ export const FAB = ({ style, iconName, onPress }: Props) => {
       style={[
         // estilos fijos
         {
+          // se muestra primero ante todo
+          zIndex:99,
           position: 'absolute',
           bottom: 30,
           right: 20,

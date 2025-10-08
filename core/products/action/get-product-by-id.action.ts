@@ -26,7 +26,7 @@ const emptyProduct:Product={
 // Promise<Product> : como el rest es async debes decir q sera una promesa lo q te devuelve pq tiene q esperar
 export const getproductsById = async (id: string): Promise<Product> => {
 
-  console.log(id);
+  // console.log(id);
 
   // si el id new enviado desde el parametro devuelve un objeto vacio
   // osea el icono mas de la vista listado envia un new como params 

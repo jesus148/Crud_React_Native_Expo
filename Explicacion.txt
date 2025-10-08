@@ -2,7 +2,14 @@
 
 IMPORTANTE EL BACK ES EXTERNO 
 > LEVANTAR DOCKER 
-> C:\Users\jesus\Desktop\JESUS\REACT NATIVE\FernadoHerreraCurso\productApp\back\tesloshop-backend
+  C:\Users\jesus\Desktop\JESUS\REACT NATIVE\FernadoHerreraCurso\productApp\back\tesloshop-backend
+  > documentacion de endpoints esta ahi 
+  > el user admin es , tiene permisos a todo
+    {
+    "email":"test1@google.com",
+    "password":"Abc123"
+    }
+  > recordar que el backend tiene validaciones.  
 > en postman > react native > crud_proyecto
 > recordar hay metodos rest > como los get de products q llevan >
      autorization > bearer token > token (poner el token de login)
@@ -68,9 +75,8 @@ To run your project, navigate to the directory and run one of the following npm 
 
  para solo autenticados 
   >app\(products-app)\(home)
- para  que autentiquen osea general
+ para  que autentiquen osea general ,esta el login
   > app\auth
-  > app\(products-app)
 
  folder para regla de negocio y metodos rest
   > core
@@ -79,11 +85,13 @@ To run your project, navigate to the directory and run one of the following npm 
  folder para almacenar token.etc 
  helpers\adapters
 
+ folder para usar colores 
+  > constants
 
  ojo : folder q inician 
   > inicia > app\_layout.tsx
   > luego dirige ahi > app\(products-app)\_layout.tsx
-
+  > primero ejecuta el primer layaout luego entra a otro layaout
 
 
   4. 
@@ -155,6 +163,8 @@ documentacion > https://icons.expo.fyi/Index
 
 TanStack Query  : (algo asi como zustand)
  TanStack Query (anteriormente conocida como React Query) a menudo se describe como la biblioteca de obtención de datos que faltaba para las aplicaciones web, pero en términos más técnicos, hace que la obtención, el almacenamiento en caché, la sincronización y la actualización del estado del servidor en sus aplicaciones web sean muy fáciles.    
+
+ ojo: la data lo guarda en cache por ende debes resetear para mostrar nuevos cambios.
 
  documentation : https://tanstack.com/query/latest/docs/framework/react/installation
 

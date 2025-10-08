@@ -25,7 +25,7 @@ const ProducScreen = () => {
   // metodo rest para obtener product solo 1
   // `${id}` : convierte a string
   const { productQuery , productMutation } = useProduct(`${id}`);
-  console.log(productQuery.data);
+  // console.log(productQuery.data);
 
   // sacando la data
   const product = productQuery.data!;
@@ -89,6 +89,7 @@ const ProducScreen = () => {
         >
           {/* para scrollear */}
           <ScrollView>
+            {/* componente imagenes muestra */}
             {/* recorrido de un productos solo sus imagenes q es un array */}
             {/* values.images : envio de data del initialvalues, el array de imagenes */}
             <ProductImage images={values.images} />

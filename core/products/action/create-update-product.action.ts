@@ -33,19 +33,24 @@ const updateProduct = async (product: Partial<Product>) => {
     )
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error("Function not implemented");
   }
 };
 
-// metodo crear 
+// metodo crear producto
 async function createProduct(product: Partial<Product>) {
+  // desestructurando
     const {id, images=[], user, ...rest} = product;
   try {
-    const { data} = await productsApi.post<Product>(`/products/${id}`,
+    // metodo rest crear
+    const { data} = await productsApi.post<Product>(`/products`,
       {...rest}
     )
+    // retornando
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error("Function not implemented");
   }
 }
