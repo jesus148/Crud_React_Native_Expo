@@ -139,6 +139,8 @@ peticiones
    > y cambia su nombe x > .env.template
 
   ojo: recordar ahi ponemos las ip de mi pc , en ciertos casos cambia la ip de mi pc donde esta corriendo el back con docker
+     cuando subas tu proyecto a git omite con el gitignore el .env y saca una copia como el .env.template solo para mostrar 
+    lo que se usa.
 
 7.
   recordar cualquier configuracion ponerlo en el > README.md   
@@ -190,3 +192,18 @@ Al reunir todo lo anterior en un solo lugar, Formik mantendrá todo organizado, 
 > si sale error > para tu ejecucion de expo
  instalar esto >  npm install lodash
  > limpia la cache de expo > npx expo start -c
+
+
+
+12. usando la camara en expo
+
+> documentacion > https://docs.expo.dev/versions/latest/sdk/camera/ 
+
+> npx expo install expo-camera
+
+> en el usage > Usage (copia todo el codigo y luego editalo)
+> en este proyecto lo uso aqui > app\(products-app)\camera
+>recordar cuando entras o usas eso siempre pedira permisos
+
+> usando la camara solo en el emulador cuando tenga permisos 
+presiona la tecla alt + mueve el cursos  , para avanzar en letra w 

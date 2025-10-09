@@ -1,11 +1,11 @@
 import ProductImage from "@/presentation/products/components/ProductImage";
 import useProduct from "@/presentation/products/hooks/useProduct";
+import MenuIconButton from "@/presentation/theme/components/MenuIconButton";
 import ThemedButton from "@/presentation/theme/components/ThemedButton";
 import ThemedButtonGroup from "@/presentation/theme/components/ThemedButtonGroup";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
 import { ThemedView } from "@/presentation/theme/components/ThemedView";
-import { Ionicons } from "@expo/vector-icons";
-import { Redirect, useLocalSearchParams, useNavigation } from "expo-router";
+import { Redirect, router, useLocalSearchParams, useNavigation } from "expo-router";
 import { Formik } from "formik";
 import React, { useEffect } from "react";
 import {
@@ -39,8 +39,13 @@ const ProducScreen = () => {
   useEffect(() => {
     // Cambia las opciones visuales o funcionales del header.osea agrega algo en el header arriba
     usenavigation.setOptions({
-      // Permite renderizar un componente en la esquina derecha del header.
-      headerRight: () => <Ionicons name="camera-outline" size={25} />,
+      // Permite renderizar un componente en la esquina derecha del header. , es el componente camara
+      headerRight: () => <MenuIconButton 
+      // app\(products-app)\camera\index.tsx
+      // push agrega  a la pila
+       onPress={()=>router.push('/(products-app)/camera')}
+       icon="camera-outline"
+      />,
     });
   }, []);
 
@@ -101,6 +106,7 @@ const ProducScreen = () => {
                 placeholder="Titulo"
                 style={{ marginVertical: 5 }}
                 value={values.title} //valor del input , values.title es el valor del formik
+                // para cambiar el valor del initialValues={product} 
                 onChangeText={handleChange("title")} // funcion cuando cambia el values.title, recuerda "title" = a tus atributo de rest , recordar q el handleChange es para inpust simples
               />
 
