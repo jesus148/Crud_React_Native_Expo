@@ -128,6 +128,8 @@ To run your project, navigate to the directory and run one of the following npm 
 peticiones
  >npm install axios
 
+ >npm install zustand
+
 
 
 6. 
@@ -195,7 +197,9 @@ Al reunir todo lo anterior en un solo lugar, Formik mantendrá todo organizado, 
 
 
 
-12. usando la camara en expo
+12. 
+
+usando la camara en expo
 
 > documentacion > https://docs.expo.dev/versions/latest/sdk/camera/ 
 
@@ -206,4 +210,52 @@ Al reunir todo lo anterior en un solo lugar, Formik mantendrá todo organizado, 
 >recordar cuando entras o usas eso siempre pedira permisos
 
 > usando la camara solo en el emulador cuando tenga permisos 
-presiona la tecla alt + mueve el cursos  , para avanzar en letra w 
+presiona la tecla alt + mueve el cursos  , para avanzar en letra 
+
+--------- Expo MediaLibrary
+es para tener acceso a la data del del celular del usuario , osea para guardar imagen o cargar imagenes
+
+> documentacion > https://docs.expo.dev/versions/latest/sdk/media-library/
+> en la parte de Usage ahi te dice como usar
+
+>npx expo install expo-media-library
+
+> lo usamos aqui > app\(products-app)\camera\index.tsx
+
+
+
+----Expo ImagePicker
+es un paquete para que el usuario acceda a su galeria y pueda seleccionar imagenes para subirla a la app
+
+documentacion > https://docs.expo.dev/versions/latest/sdk/imagepicker/
+
+> npx expo install expo-image-picker
+
+
+
+
+tips : si quieres setear osea , cambiar los permisos de la app expo en el emulador para hacer pruebas 
+      dirigete , con el mouse la ruedita del medio hacia abajo > setting > app > busca expo 
+      > en permisions  > ponlo en ask every time (la camara y location )
+
+
+
+--- parte del backend externo con docker
+ > subir img desde postman 
+ > http://localhost:3000/api/files/product ---post 
+ >body >form-data >
+  key(file)  - value(poner tu img de tu pc)
+
+
+13.
+ usando zustand       
+ para manejo del estado o contexto
+ > documentacion >https://zustand.docs.pmnd.rs/guides/updating-state
+
+  >npm install zustand
+
+> lo usamos aca > presentation\store\useCameraStore.tsx
+
+
+
+

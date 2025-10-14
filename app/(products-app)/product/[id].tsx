@@ -1,5 +1,6 @@
 import ProductImage from "@/presentation/products/components/ProductImage";
 import useProduct from "@/presentation/products/hooks/useProduct";
+import { useCameraStore } from "@/presentation/store/useCameraStore";
 import MenuIconButton from "@/presentation/theme/components/MenuIconButton";
 import ThemedButton from "@/presentation/theme/components/ThemedButton";
 import ThemedButtonGroup from "@/presentation/theme/components/ThemedButtonGroup";
@@ -20,6 +21,14 @@ import {
 const ProducScreen = () => {
   // logica
 
+
+
+  // importando el contexto de la camara con zustand
+  const {selectImage, clearImages} = useCameraStore();
+
+
+
+
   // obtiene el id del product al entrar a esto
   const { id } = useLocalSearchParams();
   // metodo rest para obtener product solo 1
@@ -35,6 +44,28 @@ const ProducScreen = () => {
   // Obtiene el objeto para controlar la navegación.
   const usenavigation = useNavigation();
 
+
+
+
+
+  // se ejecuta al montarse solo 1 vez
+  // en este caso es un return entonces lo guarda
+  useEffect(() => {
+    // esto es importante 
+    // cuando hay un return dentro del useEffect 
+    // react lo guarda autoamticamente para que cuando desmonte este componente
+    // se ejecute esto
+    return () =>{
+      clearImages();
+    }
+  }, []);
+
+
+
+
+  
+
+
   // se ejecuta cuando se monta el componente solo 1 vez
   useEffect(() => {
     // Cambia las opciones visuales o funcionales del header.osea agrega algo en el header arriba
@@ -43,7 +74,7 @@ const ProducScreen = () => {
       headerRight: () => <MenuIconButton 
       // app\(products-app)\camera\index.tsx
       // push agrega  a la pila
-       onPress={()=>router.push('/(products-app)/camera')}
+       onPress={()=>router.push('/camera')}
        icon="camera-outline"
       />,
     });
@@ -85,7 +116,14 @@ const ProducScreen = () => {
     // recordar el Formik guarda la data como en memoria antes de enviar
     // onSubmit={productMutation.mutate} : envia el obejto de product de formik ya alterado al productMutation
     // para su registro o update 
-    <Formik initialValues={product} onSubmit={productMutation.mutate}>
+    <Formik initialValues={product} 
+    onSubmit={(productlike)=> productMutation.mutate({
+      ...productlike, //tra todo la data del form este con formik
+      // y la parte de images lo separa
+      // productlike.images lo que tenga el form osea lo se halla obtenido con el get 
+      // ...selectImage : de las imagenes del contexto con zustand , ose cuando 
+      images:[...productlike.images, ...selectImage]
+    })}>  
       {({ values, handleSubmit, handleChange, setFieldValue }) => (
         // ajusta la vista cuando aparece el teclado
         <KeyboardAvoidingView
@@ -97,7 +135,11 @@ const ProducScreen = () => {
             {/* componente imagenes muestra */}
             {/* recorrido de un productos solo sus imagenes q es un array */}
             {/* values.images : envio de data del initialvalues, el array de imagenes */}
-            <ProductImage images={values.images} />
+            {/* <ProductImage images={values.images} /> */}
+
+            {/* ...product.images, : valores o imagenes del rest de solo 1 producto osea la data */}
+            {/* ...selectImage : imagenes del contexto de zustand usando la camara de expo , lo agrega o lo suma */}
+            <ProductImage images={[...product.images, ...selectImage]} />
 
             {/* componente vista */}
             <ThemedView style={{ marginHorizontal: 10, marginTop: 20 }}>
