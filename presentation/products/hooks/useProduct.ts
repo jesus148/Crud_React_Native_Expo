@@ -1,12 +1,17 @@
 import { updateCreateProduct } from "@/core/products/action/create-update-product.action";
 import { getproductsById } from "@/core/products/action/get-product-by-id.action";
 import { Product } from "@/core/products/interface/get-product";
+import { useCameraStore } from "@/presentation/store/useCameraStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import { Alert } from "react-native";
 
 // METODO REST PARA EJECUTAR SOLO 1 PRODUCTO GET
 const useProduct = (productId: string) => {
+
+
+  // importando el contexto de la camara
+  const {clearImages} = useCameraStore();
 
   
   // es un hook de React Query que te da acceso al Query Client.
@@ -49,6 +54,11 @@ const useProduct = (productId: string) => {
       // se setea el productidref con el nuevo valor
       // si ya registraste lo guarda de tal forma que si registras otra vez seria un update pq envia el id
       productidref.current = data.id;
+
+
+      // limpiando el contexto de zustand
+      // osea limpiando las imagenes temporales de la vista de 1 get producto
+      clearImages();
 
 
       // metodos para actualizar el listado 

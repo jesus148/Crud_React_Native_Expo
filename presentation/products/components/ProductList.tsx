@@ -28,7 +28,7 @@ const ProductList = ({products, loadNextPage}:Props) => {
     await new Promise((resolve)=>setTimeout(resolve,200));
 
     // resetea tu rest de listado productos
-    // presentation\products\hooks\useProduct.ts
+    // presentation\products\hooks\useProducts.ts
     queryclient.invalidateQueries({
       queryKey:['prducts','infinite']
     });
@@ -52,6 +52,8 @@ const ProductList = ({products, loadNextPage}:Props) => {
     refreshControl={
       // metodo actualizar o resetear llama al metodo y el usestate
       // osea es el boton que aparece arriba cuando quieres actualizar el listado
+      // refreshing : muestra el spinner
+      // onRefresh={onPullToRefresh}  : ejecuta la funcion
       <RefreshControl refreshing={isRefreshing} onRefresh={onPullToRefresh} />
     }
     />

@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   useWindowDimensions,
   View,
@@ -82,11 +83,9 @@ const RegistrerScreen = () => {
   return (
     // KeyboardAvoidingView : para q cuando aparezca el teclado mi vista se acomede su altura
     // si sale error poner en el > app\_layout.tsx -- padre envolverlo con GestureHandlerRootView
-    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+    <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' :undefined} style={{ flex: 1 }} >
       {/* para q haga scrool */}
-      <ScrollView
-        style={{ paddingHorizontal: 40, backgroundColor: backgroundColor }}
-      >
+      <ScrollView style={{ paddingHorizontal: 40, backgroundColor:backgroundColor , flex:1 }}  contentContainerStyle={{ flexGrow: 1 }}>
         {/* vista encabezado */}
         <View
           style={{
@@ -155,7 +154,7 @@ const RegistrerScreen = () => {
         >
           <ThemedText>¿ya tienes cuenta?</ThemedText>
           {/* redirige ahi > app\auth\login */}
-          <ThemedLink href="/auth/login" style={{ marginHorizontal: 5 }}>
+          <ThemedLink href="/auth/login" style={{ marginHorizontal: 5 }} replace>
             {/* todo dentro de aca es children auto , actua como props */}
             Ingresar
           </ThemedLink>

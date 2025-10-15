@@ -16,6 +16,7 @@ import {
   ScrollView,
   View,
 } from "react-native";
+import { RefreshControl } from "react-native-gesture-handler";
 
 // VISTA DE 1 PRODUCTO
 const ProducScreen = () => {
@@ -31,6 +32,8 @@ const ProducScreen = () => {
 
   // obtiene el id del product al entrar a esto
   const { id } = useLocalSearchParams();
+
+
   // metodo rest para obtener product solo 1
   // `${id}` : convierte a string
   const { productQuery , productMutation } = useProduct(`${id}`);
@@ -80,7 +83,7 @@ const ProducScreen = () => {
     });
   }, []);
 
-  // si hay data en el [productQuery.data]
+  // si hay data en el [productQuery.data] cambia
   useEffect(() => {
     //  si hay data en el [productQuery.data]
     if (productQuery.data) {
@@ -131,7 +134,22 @@ const ProducScreen = () => {
           behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
           {/* para scrollear */}
-          <ScrollView>
+          <ScrollView
+          // para refrescar osea actualizar los datos
+          // para refresca permitir el gesto de “arrastrar hacia abajo para actualizar
+          refreshControl={
+            <RefreshControl 
+            // cuando esta trayendo los datos el backend se muestra
+            refreshing={productQuery.isFetching}
+            // Función que se ejecuta cuando el usuario arrastra hacia abajo
+            onRefresh={async()=>{
+              // fuerza a recargar la data
+              // presentation\products\hooks\useProduct.ts
+              await productQuery.refetch();
+            }}
+            />
+          }
+          >
             {/* componente imagenes muestra */}
             {/* recorrido de un productos solo sus imagenes q es un array */}
             {/* values.images : envio de data del initialvalues, el array de imagenes */}

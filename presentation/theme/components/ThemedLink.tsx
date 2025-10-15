@@ -8,7 +8,8 @@ import { useThemeColor } from "../hooks/useThemeColor";
 // https://expo.github.io/router/docs/migration/react-navigation/link/
 
 // clase modelo
-interface Props extends LinkProps{}
+interface Props extends LinkProps {}
+
 
 // style props propio
 // ...rest : props propios de LinkProps

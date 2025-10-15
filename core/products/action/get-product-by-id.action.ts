@@ -45,6 +45,7 @@ export const getproductsById = async (id: string): Promise<Product> => {
         // setea de la data solo images, recorre y devuelve un array , 
         // osea enviamos el image al back con el endpoint para que nos de la img
         // http://192.168.100.5:3000/api/files/product/7654393-00-A_2_2000.jpg ---ejemplo de estructura
+        // la imagen se descarga automaticamente cuando lo ponen en un get como la image de react native
         images: data.images.map((image)=>`${API_URL}/files/product/${image}`)
     }
   } catch (error) {

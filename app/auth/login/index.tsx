@@ -5,10 +5,11 @@ import { ThemedText } from "@/presentation/theme/components/ThemedText";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
 import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   useWindowDimensions,
   View,
@@ -80,9 +81,12 @@ const LoginScreen = () => {
   return (
     // KeyboardAvoidingView : para q cuando aparezca el teclado mi vista se acomede su altura
     // si sale error poner en el > app\_layout.tsx -- padre envolverlo con GestureHandlerRootView
-    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+    // behavior : comportamineto segun ios o android
+    <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' :undefined} style={{ flex: 1 }} >
       {/* para q haga scrool */}
-      <ScrollView style={{ paddingHorizontal: 40, backgroundColor:backgroundColor }}>
+      {/* contentContainerStyle={{ flexGrow: 1 }} :Hace que el contenido del ScrollView ocupe todo el alto disponible
+(incluso después de que el teclado desaparece).en caso aparezca algo abajo como un margin */}
+      <ScrollView style={{ paddingHorizontal: 40, backgroundColor:backgroundColor , flex:1 }}  contentContainerStyle={{ flexGrow: 1 }}>
         {/* vista encabezado */}
         <View
           style={{
@@ -100,7 +104,7 @@ const LoginScreen = () => {
             placeholder="Correo Electrónico"
             keyboardType="email-address" //tipo de input
             autoCapitalize="none"
-            icon="mail-outline"
+            icon="mail-outline" 
             value={form.email} //value del input
             // cuando escribe ejecuta esto , solo cambia el email
             onChangeText={(value)=> setForm({...form, email:value})}
@@ -143,7 +147,10 @@ const LoginScreen = () => {
         >
           <ThemedText>¿No tienes cuenta?</ThemedText>
           {/* redirige ahi > app\auth\registrer */}
-          <ThemedLink href='/auth/registrer' style={{marginHorizontal:5}}>
+          {/* replace : borra todo las rutas y agrega la nueva
+          ideal cuando no usas stack o slot de expo 
+          evita cargas acumulativas y q te salga vista vacias */}
+          <ThemedLink href='/auth/registrer' style={{marginHorizontal:5}} replace>
             {/* todo dentro de aca es children auto , actua como props */}
             Crear Cuenta
           </ThemedLink>
