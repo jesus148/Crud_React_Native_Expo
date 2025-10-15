@@ -210,7 +210,7 @@ usando la camara en expo
 >recordar cuando entras o usas eso siempre pedira permisos
 
 > usando la camara solo en el emulador cuando tenga permisos 
-presiona la tecla alt + mueve el cursos  , para avanzar en letra 
+presiona la tecla alt + muevete con la ruedita del mouse , para avanzar con la letra w,s,a,d. 
 
 --------- Expo MediaLibrary
 es para tener acceso a la data del del celular del usuario , osea para guardar imagen o cargar imagenes
@@ -230,6 +230,8 @@ es un paquete para que el usuario acceda a su galeria y pueda seleccionar imagen
 documentacion > https://docs.expo.dev/versions/latest/sdk/imagepicker/
 
 > npx expo install expo-image-picker
+
+> ruta en dond usamos > app\camera\index.tsx
 
 
 
