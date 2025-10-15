@@ -17,9 +17,9 @@ export const API_URL =
     ? process.env.EXPO_PUBLIC_API_URL_IOS
     : process.env.EXPO_PUBLIC_API_URL_ANDROID; //si es android , poner tu ip
 
-    // 192.168.100.5 : es tu ip de tu pc , 3000 el puerto de back corriendo en docker en tu pc , /api endpoint inicio del back
+    // xxxxxxxxxxxxx : es tu ip de tu pc , 3000 el puerto de back corriendo en docker en tu pc , /api endpoint inicio del back
     // si hay error solo cambiar la ip de tu pc
-//  LOG  {"android": "http://192.168.100.5:3000/api", "stage": "dev"}
+//  LOG  {"android": "http://xxxxxxxxxxxxx:3000/api", "stage": "dev"}
 // console.log({
 //   stage: STAGE,
 //   [Platform.OS]: API_URL,
