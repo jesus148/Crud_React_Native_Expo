@@ -118,7 +118,7 @@ const updateProduct = async (product: Partial<Product>) => {
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("Function not implemented");
+    throw new Error("update Function not implemented");
   }
 };
 
@@ -141,6 +141,6 @@ async function createProduct(product: Partial<Product>) {
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("Function not implemented");
+    throw new Error("create Function not implemented");
   }
 }

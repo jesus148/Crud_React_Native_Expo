@@ -15,6 +15,9 @@ interface TemporalCameraStoreState {
 
 // la funcion de zustand es de tipo TemporalCameraStoreState
 export const useCameraStore = create<TemporalCameraStoreState>()((set) => ({
+
+
+
   // donde se guardan las imagenes
   selectImage: [],
 
@@ -27,3 +30,5 @@ export const useCameraStore = create<TemporalCameraStoreState>()((set) => ({
   //   limpiando imagenes
   clearImages: () => set({ selectImage: [] }),
 }));
+
+

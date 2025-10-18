@@ -8,6 +8,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 
 // Create a client
@@ -45,11 +46,11 @@ export default function RootLayout() {
 
   return (
     // GestureHandlerRootView : para manejar mejor los boton de react  native
-    // <GestureHandlerRootView
-    //   style={{ backgroundColor: backgroundColor, flex: 1 }}
-    // >
-       // TanStack Query  : para el manejo de estado de peticiones rest
-      // envolver en todo , esto sirva para almcenar el cache la data se guarda ahi y ya no es nesecario volver a solicitar data. 
+    <GestureHandlerRootView
+      style={{ backgroundColor: backgroundColor, flex: 1 }}
+    >
+       {/* TanStack Query  : para el manejo de estado de peticiones rest
+       envolver en todo , esto sirva para almcenar el cache la data se guarda ahi y ya no es nesecario volver a solicitar data.  */}
       <QueryClientProvider client={queryClient} >
         {/* // ThemeProvider aplica DarkTheme o DefaultTheme según el esquema. */}
         <ThemeProvider
@@ -78,6 +79,6 @@ export default function RootLayout() {
           {/* <StatusBar style="auto" /> */}
         </ThemeProvider>
       </QueryClientProvider>
-    // </GestureHandlerRootView>
+    </GestureHandlerRootView>
   );
 }

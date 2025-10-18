@@ -34,6 +34,8 @@ export default function CameraScreen() {
   const [mediaPermission, requestMediaPermission] =
     MediaLibrary.usePermissions();
 
+    
+
   // donde se guarda la imagen al tomar la foto para luega mostrarla
   const [selectImage, setSelectImgae] = useState<string>();
 

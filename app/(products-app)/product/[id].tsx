@@ -6,9 +6,14 @@ import ThemedButton from "@/presentation/theme/components/ThemedButton";
 import ThemedButtonGroup from "@/presentation/theme/components/ThemedButtonGroup";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
 import { ThemedView } from "@/presentation/theme/components/ThemedView";
-import { Redirect, router, useLocalSearchParams, useNavigation } from "expo-router";
+import {
+  Redirect,
+  router,
+  useLocalSearchParams,
+  useNavigation,
+} from "expo-router";
 import { Formik } from "formik";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -25,18 +30,23 @@ const ProducScreen = () => {
 
 
   // importando el contexto de la camara con zustand
-  const {selectImage, clearImages} = useCameraStore();
-
-
-
+  const { selectImage, clearImages } = useCameraStore();
 
   // obtiene el id del product al entrar a esto
   const { id } = useLocalSearchParams();
 
+  
+  // donde pondremos luego del montado todo el valor del Formik , osea todos sus valores
+  // para tener acceso fuera de este componente para resetear .etc 
+  // osea esto sirve para limpiar los inputs luego de registrar
+  const formikRef = useRef<any>(null);
+
 
   // metodo rest para obtener product solo 1
   // `${id}` : convierte a string
-  const { productQuery , productMutation } = useProduct(`${id}`);
+  // formikRef : le envia el objeto q tiene dentro el current
+  // luego de montarse la vista el Formik resetea con todo sus valores
+  const { productQuery, productMutation } = useProduct(`${id}`, formikRef);
   // console.log(productQuery.data);
 
   // sacando la data
@@ -50,36 +60,31 @@ const ProducScreen = () => {
 
 
 
-
   // se ejecuta al montarse solo 1 vez
   // en este caso es un return entonces lo guarda
   useEffect(() => {
-    // esto es importante 
-    // cuando hay un return dentro del useEffect 
+    // esto es importante
+    // cuando hay un return dentro del useEffect
     // react lo guarda autoamticamente para que cuando desmonte este componente
     // se ejecute esto
-    return () =>{
+    return () => {
       clearImages();
-    }
+    };
   }, []);
-
-
-
-
-  
-
 
   // se ejecuta cuando se monta el componente solo 1 vez
   useEffect(() => {
     // Cambia las opciones visuales o funcionales del header.osea agrega algo en el header arriba
     usenavigation.setOptions({
       // Permite renderizar un componente en la esquina derecha del header. , es el componente camara
-      headerRight: () => <MenuIconButton 
-      // app\(products-app)\camera\index.tsx
-      // push agrega  a la pila
-       onPress={()=>router.push('/camera')}
-       icon="camera-outline"
-      />,
+      headerRight: () => (
+        <MenuIconButton
+          // app\(products-app)\camera\index.tsx
+          // push agrega  a la pila
+          onPress={() => router.push("/camera")}
+          icon="camera-outline"
+        />
+      ),
     });
   }, []);
 
@@ -115,19 +120,24 @@ const ProducScreen = () => {
     // usando el formik para manejar el estado de formularios
     // initialValues : valor inicial, osea la data la data lo pone ahi
     // onSubmit : para manejar el formulario, es la data q enviaras de los form
-      // se envia como objeto
+    // se envia como objeto
     // recordar el Formik guarda la data como en memoria antes de enviar
     // onSubmit={productMutation.mutate} : envia el obejto de product de formik ya alterado al productMutation
-    // para su registro o update 
-    <Formik initialValues={product} 
-    onSubmit={(productlike)=> productMutation.mutate({
-      ...productlike, //tra todo la data del form este con formik
-      // y la parte de images lo separa
-      // productlike.images lo que tenga el form osea lo se halla obtenido con el get 
-      // ...selectImage : de las imagenes del contexto con zustand , ose cuando 
-      images:[...productlike.images, ...selectImage]
-    })}>  
-      {({ values, handleSubmit, handleChange, setFieldValue }) => (
+    // para su registro o update
+    <Formik
+      initialValues={product}
+      innerRef={formikRef} //asigna todo el valor(propiedad , metodos) del Formik a l formikRef para acceder desde fuera
+      onSubmit={(productlike) =>
+        productMutation.mutate({
+          ...productlike, //tra todo la data del form este con formik
+          // y la parte de images lo separa
+          // productlike.images lo que tenga el form osea lo se halla obtenido con el get
+          // ...selectImage : de las imagenes del contexto con zustand , ose cuando
+          images: [...productlike.images, ...selectImage]
+        })
+      }
+    >
+      {({ values, handleSubmit, handleChange, setFieldValue, resetForm }) => (
         // ajusta la vista cuando aparece el teclado
         <KeyboardAvoidingView
           // como se comporta tu vista
@@ -135,20 +145,20 @@ const ProducScreen = () => {
         >
           {/* para scrollear */}
           <ScrollView
-          // para refrescar osea actualizar los datos
-          // para refresca permitir el gesto de “arrastrar hacia abajo para actualizar
-          refreshControl={
-            <RefreshControl 
-            // cuando esta trayendo los datos el backend se muestra
-            refreshing={productQuery.isFetching}
-            // Función que se ejecuta cuando el usuario arrastra hacia abajo
-            onRefresh={async()=>{
-              // fuerza a recargar la data
-              // presentation\products\hooks\useProduct.ts
-              await productQuery.refetch();
-            }}
-            />
-          }
+            // para refrescar osea actualizar los datos
+            // para refresca permitir el gesto de “arrastrar hacia abajo para actualizar
+            refreshControl={
+              <RefreshControl
+                // cuando esta trayendo los datos el backend se muestra
+                refreshing={productQuery.isFetching}
+                // Función que se ejecuta cuando el usuario arrastra hacia abajo
+                onRefresh={async () => {
+                  // fuerza a recargar la data
+                  // presentation\products\hooks\useProduct.ts
+                  await productQuery.refetch();
+                }}
+              />
+            }
           >
             {/* componente imagenes muestra */}
             {/* recorrido de un productos solo sus imagenes q es un array */}
@@ -166,7 +176,7 @@ const ProducScreen = () => {
                 placeholder="Titulo"
                 style={{ marginVertical: 5 }}
                 value={values.title} //valor del input , values.title es el valor del formik
-                // para cambiar el valor del initialValues={product} 
+                // para cambiar el valor del initialValues={product}
                 onChangeText={handleChange("title")} // funcion cuando cambia el values.title, recuerda "title" = a tus atributo de rest , recordar q el handleChange es para inpust simples
               />
 
@@ -204,7 +214,7 @@ const ProducScreen = () => {
                 onChangeText={handleChange("price")}
               ></ThemedTextInput>
               <ThemedTextInput
-                placeholder="Precio"
+                placeholder="Inventario"
                 style={{ flex: 1 }}
                 value={values.stock.toString()}
                 onChangeText={handleChange("stock")}

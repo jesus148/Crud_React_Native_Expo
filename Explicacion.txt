@@ -261,3 +261,32 @@ tips : si quieres setear osea , cambiar los permisos de la app expo en el emulad
 
 
 
+14.
+  flujo de las imagenes o cualquier file estatico
+  
+  > img de referencia > flujoimagenes.png
+  > primero cuando obtenemos un producto por el id 
+    en la imagen obtener el nombre de la imagen > img.jpg
+    por ende debemos moldear eso de tal formulario
+      > http:awss3/img.jpg 
+      > de esa forma para que cuando lo pongamos en image de react native 
+       lo haga auto y muestre la imagen 
+
+  > ahora cuando queremos subir imagenes nuevas
+   > recordar q usamos zustand aqui > ponemos las imagenes en el local pueden ser varias 
+   > luego cuando registramaos > hacemos un spread ... > 
+   > y primero registramos las imagenes en el aws ,supabase.etc donde guardes tus estaticos 
+    recordar que los estaticos se guardan aparte y no en la bd 
+   > entonces primero subimos las imagenes nuevas , las viejas 
+   el back devuelve las url de las img nuevas, y eso lo juntamos con las que ya estan 
+
+   > y eso le hacemos un map limpiamos y solo obtendremos el nombre y eso registraremos en la base de datos
+    y el ciclo se repite desde el inicio.
+
+
+
+
+15. 
+  en C:\Users\jesus\Desktop\JESUS\REACT NATIVE\FernadoHerreraCurso\productApp\Material-de-clase.zip
+   descomprime y copialo y remplaza en el > assets\images
+   
