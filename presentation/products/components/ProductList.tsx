@@ -40,6 +40,7 @@ const ProductList = ({products, loadNextPage}:Props) => {
   return (
     // manejar listado en react native
     <FlatList 
+    style={{marginBottom:51}}
     data={products} //data
     numColumns={2} //columnas
     keyExtractor={(item)=>item.id} //clave unica
